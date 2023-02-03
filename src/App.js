@@ -1,7 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 
+import {connect} from 'react-redux';
+import { updateUser } from './actions/userActions';
+
 function App() {
+  
+  const onUpdateUser=()=>{
+    this.props.onUpdateUser('Veli');
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -16,10 +24,25 @@ function App() {
           rel="noopener noreferrer"
         >
           Learn React
+          
         </a>
       </header>
+      <h2>{this.props.user}</h2>
+      <button onClick={onUpdateUser}>Change The User</button>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state,props) => {
+  console.log(props);
+  return {
+    ...state,
+    myCount: props.count + 2 ,
+  }
+};
+
+const mapDispatchToProps = {
+  onUpdateUser: updateUser
+};
+
+export default connect (mapStateToProps,mapDispatchToProps)(App);
